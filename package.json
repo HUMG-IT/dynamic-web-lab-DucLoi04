@@ -1,9 +1,10 @@
 {
   "name": "dynamic_web_lab",
   "version": "1.0.0",
+  "description": "Làm quen với ứng dụng web động",
   "main": "index.js",
   "scripts": {
-    "prestart": "lsof -i :3000 | grep LISTEN | awk '{print $2}' | xargs kill -9 || true",
+    "prestart": "node prestart.js",
     "start": "node src/app.js",
     "test": "jest",
     "cypress:run": "npx wait-on http://localhost:3000 && cypress run",
@@ -12,16 +13,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "Làm quen với ứng dụng web động",
   "dependencies": {
     "chromedriver": "^130.0.2",
     "express": "^4.21.1",
     "selenium-webdriver": "^4.26.0"
   },
   "devDependencies": {
-    "cypress": "^13.15.1",
+    "cypress": "^13.15.2",
     "jest": "^29.7.0",
     "supertest": "^7.0.0",
     "wait-on": "^8.0.1"
+  },
+  "directories": {
+    "test": "test"
   }
 }

@@ -19,7 +19,7 @@ document.getElementById('nameForm').addEventListener('submit', async function (e
     const data = await response.json();
 
     // Hiển thị thông điệp trả về từ server trong phần tử có id là 'nameResponse'
-    document.getElementById('nameResponse').textContent = `${data.message}. Danh sách tên: ${data.names.join(', ')}`;
+    document.getElementById('nameResponse').textContent = `Thông điệp từ server: ${data.message}. Danh sách tên: ${data.names.join(', ')}`;
 });
 
 // Form tính BMI
@@ -44,5 +44,5 @@ document.getElementById('bmiForm').addEventListener('submit', async function (e)
     const data = await response.json();
 
     // Hiển thị thông điệp trả về từ server trong phần tử có id là 'bmiResult'
-    document.getElementById('bmiResult').textContent = `BMI của bạn là: ${data.bmi}, Phân loại: ${data.classification}`;
+    document.getElementById('bmiResult').textContent = `BMI của bạn là: ${data.bmi}, Phân loại: ${data.category}`;
 });
