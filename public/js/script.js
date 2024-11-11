@@ -19,7 +19,7 @@ document.getElementById('nameForm').addEventListener('submit', async function (e
     const data = await response.json();
 
     // Hiển thị thông điệp trả về từ server trong phần tử có id là 'nameResponse'
-    document.getElementById('nameResponse').textContent = `Thông điệp từ server: ${data.message}. Danh sách tên: ${data.names.join(', ')}`;
+    document.getElementById('nameResponse').textContent = `Thông điệp: ${data.message}. Danh sách tên: ${data.names.join(', ')}`;
 });
 
 // Form tính BMI

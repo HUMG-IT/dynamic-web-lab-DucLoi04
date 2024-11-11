@@ -33,3 +33,4 @@ const classifyBMI = (bmi) => {
 };
 
 module.exports = { calculateBMI, classifyBMI };
+

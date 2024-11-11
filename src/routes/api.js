@@ -1,68 +1,40 @@
-const request = require('supertest');
+/**
+ * Module định nghĩa các route của ứng dụng
+ * 
+ * Module này định nghĩa các route liên quan đến:
+ * - Lưu tên của người dùng.
+ * - Tính và phân loại chỉ số BMI từ dữ liệu người dùng.
+ */
+
 const express = require('express');
+const router = express.Router();
+const { submitName } = require('../controllers/nameController');
+const { calculateBMI } = require('../controllers/bmiController');
+// TODO: Import hàm getBMI từ bmiController để xử lý yêu cầu tính chỉ số BMI
 
-const app = express();
-app.use(express.json());
+/**
+ * Route cho endpoint /submit
+ * 
+ * Route này nhận yêu cầu POST từ client với tên người dùng và
+ * gọi hàm submitName từ nameController để thêm tên vào danh sách.
+ * 
+ * @route POST /api/v1/submit
+ * @access Public
+ * @returns {Object} JSON - Trả về thông điệp chào và danh sách tên.
+ */
+router.post('/submit', submitName);
+router.post('/bmi', calculateBMI);
 
-// Định nghĩa route và logic kiểm thử cho ứng dụng
-const names = [];
-app.post('/api/v1/submit', (req, res) => {
-  const name = req.body.name;
-  names.push(name);
-  res.json({ message: `Xin chào, ${name}!`, names });
-});
+/**
+ * Route cho endpoint /bmi
+ * 
+ * Route này nhận yêu cầu POST từ client với thông tin chiều cao và cân nặng,
+ * gọi hàm getBMI từ bmiController để tính và phân loại chỉ số BMI.
+ * 
+ * @route POST /api/v1/bmi
+ * @access Public
+ * @returns {Object} JSON - Trả về chỉ số BMI và phân loại.
+ */
+// TODO: Định nghĩa route POST cho /bmi, sử dụng hàm getBMI từ bmiController để xử lý yêu cầu
 
-describe('Kiểm thử POST /api/v1/submit', () => {
-  it('trả về lời chào và cập nhật mảng tên', async () => {
-    const res = await request(app)
-      .post('/api/v1/submit')
-      .send({ name: 'John' });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('message', 'Xin chào, John!');
-    expect(res.body.names).toContain('John');
-  });
-});
-
-// Import các model và controller cho BMI
-const { calculateBMI, classifyBMI } = require('../src/models/bmi');
-app.post('/api/v1/bmi', (req, res) => {
-  const { weight, height } = req.body;
-  const bmi = calculateBMI(weight, height);
-  const classification = classifyBMI(bmi);
-  res.json({ bmi, classification });
-});
-// BMI
-describe('Kiểm thử POST /api/v1/bmi', () => {
-  it('tính chỉ số BMI và trả về phân loại "Bình thường" cho cân nặng 60kg và chiều cao 165cm', async () => {
-    const res = await request(app)
-      .post('/api/v1/bmi')
-      .send({ weight: 60, height: 165 });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('bmi');
-    expect(res.body).toHaveProperty('classification', 'Béo phì');
-  });
-
-  it('phân loại là "Gầy" cho BMI thấp', async () => {
-    const res = await request(app)
-      .post('/api/v1/bmi')
-      .send({ weight: 45, height: 165 });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.classification).toBe('Béo phì');
-  });
-
-  it('phân loại là "Thừa cân" cho BMI cao hơn', async () => {
-    const res = await request(app)
-      .post('/api/v1/bmi')
-      .send({ weight: 75, height: 165 });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.classification).toBe('Béo phì');
-  });
-
-  it('phân loại là "Béo phì" cho BMI rất cao', async () => {
-    const res = await request(app)
-      .post('/api/v1/bmi')
-      .send({ weight: 90, height: 165 });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.classification).toBe('Béo phì');
-  });
-});
+module.exports = router;
