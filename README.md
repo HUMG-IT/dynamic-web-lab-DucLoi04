@@ -323,3 +323,6 @@ Nâng cấp mã của ứng dụng này để cho phép Tính chỉ số BMI tr�
 - Commit và push thay đổi của bạn lên GitHub với message của bạn.
 - Kiểm tra kết quả: Truy cập tab Actions trên GitHub của repository này.
 GitHub Actions sẽ tự động kiểm tra mã của bạn. Nếu kiểm thử thành công, bạn sẽ thấy thông báo "Success".
+
+---
+revised
